@@ -48,6 +48,12 @@ namespace TerminalApp
         Boolean Fullscreen { get; };
         Boolean AlwaysOnTop { get; };
 
+        void IdentifyWindow();
+        String WindowName;
+        UInt64 WindowId;
+        void RenameFailed();
+        Boolean IsQuakeWindow();
+
         Windows.Foundation.Size GetLaunchDimensions(UInt32 dpi);
         Boolean CenterOnLaunch { get; };
 
@@ -78,5 +84,8 @@ namespace TerminalApp
         event Windows.Foundation.TypedEventHandler<Object, Object> AlwaysOnTopChanged;
         event Windows.Foundation.TypedEventHandler<Object, Object> RaiseVisualBell;
         event Windows.Foundation.TypedEventHandler<Object, Object> SetTaskbarProgress;
+        event Windows.Foundation.TypedEventHandler<Object, Object> IdentifyWindowsRequested;
+        event Windows.Foundation.TypedEventHandler<Object, RenameWindowRequestedArgs> RenameWindowRequested;
+        event Windows.Foundation.TypedEventHandler<Object, Object> IsQuakeWindowChanged;
     }
 }

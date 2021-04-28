@@ -58,6 +58,7 @@ namespace winrt::TerminalApp::implementation
         TYPED_EVENT(SwitchToTabRequested, winrt::TerminalApp::CommandPalette, winrt::TerminalApp::TabBase);
         TYPED_EVENT(CommandLineExecutionRequested, winrt::TerminalApp::CommandPalette, winrt::hstring);
         TYPED_EVENT(DispatchCommandRequested, winrt::TerminalApp::CommandPalette, Microsoft::Terminal::Settings::Model::Command);
+        TYPED_EVENT(PreviewAction, Windows::Foundation::IInspectable, Microsoft::Terminal::Settings::Model::Command);
 
     private:
         friend struct CommandPaletteT<CommandPalette>; // for Xaml to bind events
@@ -132,6 +133,12 @@ namespace winrt::TerminalApp::implementation
         static constexpr int CommandLineHistoryLength = 10;
         Windows::Foundation::Collections::IVector<winrt::TerminalApp::FilteredCommand> _commandLineHistory{ nullptr };
         ::TerminalApp::AppCommandlineArgs _appArgs;
+
+        void _choosingItemContainer(Windows::UI::Xaml::Controls::ListViewBase const& sender, Windows::UI::Xaml::Controls::ChoosingItemContainerEventArgs const& args);
+        void _containerContentChanging(Windows::UI::Xaml::Controls::ListViewBase const& sender, Windows::UI::Xaml::Controls::ContainerContentChangingEventArgs const& args);
+        winrt::TerminalApp::PaletteItemTemplateSelector _itemTemplateSelector{ nullptr };
+        std::unordered_map<Windows::UI::Xaml::DataTemplate, std::unordered_set<Windows::UI::Xaml::Controls::Primitives::SelectorItem>> _listViewItemsCache;
+        Windows::UI::Xaml::DataTemplate _listItemTemplate;
 
         friend class TerminalAppLocalTests::TabTests;
     };

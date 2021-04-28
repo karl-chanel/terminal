@@ -946,7 +946,7 @@ void CascadiaSettings::_LayerOrCreateProfile(const Json::Value& profileJson)
             // We _won't_ have these settings yet for defaults, dynamic profiles.
             if (_userDefaultProfileSettings)
             {
-                profile->InsertParent(0, _userDefaultProfileSettings);
+                Profile::InsertParentHelper(profile, _userDefaultProfileSettings, 0);
             }
 
             profile->LayerJson(profileJson);
@@ -1043,7 +1043,7 @@ void CascadiaSettings::_ApplyDefaultsFromUserSettings()
         auto childImpl{ parentImpl->CreateChild() };
 
         // Add profile.defaults as the _first_ parent to the child
-        childImpl->InsertParent(0, _userDefaultProfileSettings);
+        Profile::InsertParentHelper(childImpl, _userDefaultProfileSettings, 0);
 
         // replace parent in _profiles with child
         _allProfiles.SetAt(profileIndex, *childImpl);
@@ -1323,6 +1323,7 @@ const Json::Value& CascadiaSettings::_GetDisabledProfileSourcesJsonObject(const 
 // Method Description:
 // - Write the current state of CascadiaSettings to our settings file
 // - Create a backup file with the current contents, if one does not exist
+// - Persists the default terminal handler choice to the registry
 // Arguments:
 // - <none>
 // Return Value:
@@ -1348,6 +1349,9 @@ void CascadiaSettings::WriteSettingsToDisk() const
 
     const auto styledString{ Json::writeString(wbuilder, ToJson()) };
     _WriteSettings(styledString, settingsPath);
+
+    // Persists the default terminal choice
+    Model::DefaultTerminal::Current(_currentDefaultTerminal);
 }
 
 // Method Description:

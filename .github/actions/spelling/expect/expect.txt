@@ -88,6 +88,7 @@ args
 argv
 ARRAYSIZE
 ARROWKEYS
+asan
 ASBRST
 ASBSET
 ASDF
@@ -169,10 +170,12 @@ blog
 Blt
 BLUESCROLL
 bmp
+BODGY
 BOLDFONT
 BOOLIFY
 bools
 boostorg
+Bopomofo
 Borland
 BOTTOMLEFT
 BOTTOMRIGHT
@@ -433,6 +436,7 @@ cstring
 cstyle
 csv
 CSwitch
+CTerminal
 CText
 ctime
 ctl
@@ -571,6 +575,7 @@ defaultsettings
 DEFAULTTONEAREST
 DEFAULTTONULL
 DEFAULTTOPRIMARY
+DEFCON
 defectdefs
 DEFERERASE
 deff
@@ -672,6 +677,7 @@ dwmapi
 dword
 dwrite
 dwriteglyphrundescriptionclustermap
+dwl
 dxgi
 dxgidwm
 dxinterop
@@ -830,6 +836,7 @@ FRAMECHANGED
 fre
 freopen
 frontend
+fsanitize
 Fscreen
 FSCTL
 FSINFOCLASS
@@ -842,6 +849,7 @@ fullwidth
 func
 FUNCTIONCALL
 fuzzer
+fuzzmain
 fuzzmap
 fuzzwrapper
 fwdecl
@@ -1004,6 +1012,7 @@ horiz
 HORZ
 hostable
 hostlib
+hotkeys
 HPA
 HPAINTBUFFER
 HPCON
@@ -1020,14 +1029,20 @@ hsl
 hstr
 hstring
 hsv
+HTBOTTOMLEFT
+HTBOTTOMRIGHT
 HTCAPTION
 HTCLIENT
+HTLEFT
 htm
 HTMAXBUTTON
 HTMINBUTTON
 html
 HTMLTo
+HTRIGHT
 HTTOP
+HTTOPLEFT
+HTTOPRIGHT
 hu
 hungapp
 HVP
@@ -1193,6 +1208,7 @@ jpeg
 jpg
 JPN
 json
+jsonc
 jsoncpp
 jsprovider
 jumplist
@@ -1254,6 +1270,7 @@ LEFTSHIFT
 len
 lhs
 libpopcnt
+libsancov
 libtickit
 LIMITTEXT
 LINEDOWN
@@ -1464,6 +1481,7 @@ MSIL
 msix
 msrc
 msvcrt
+msvcrtd
 MSVS
 msys
 msysgit
@@ -2056,6 +2074,7 @@ runtests
 runtimeclass
 runuia
 runut
+runxamlformat
 rvalue
 RVERTICAL
 rxvt
@@ -2390,6 +2409,7 @@ titlebar
 TITLEISLINKNAME
 TJson
 tl
+TLambda
 TLEN
 Tlg
 Tlgdata
@@ -2847,6 +2867,7 @@ XResource
 xsd
 xsi
 xsize
+xstyler
 XSubstantial
 xtended
 xterm
