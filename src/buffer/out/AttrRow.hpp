@@ -20,16 +20,17 @@ Revision History:
 
 #pragma once
 
-#include "TextAttributeRun.hpp"
-#include "AttrRowIterator.hpp"
+#include "til/rle.h"
+#include "TextAttribute.hpp"
 
 class ATTR_ROW final
 {
-public:
-    using const_iterator = typename AttrRowIterator;
+    using rle_vector = til::small_rle<TextAttribute, UINT, 1>;
 
-    ATTR_ROW(const UINT cchRowWidth, const TextAttribute attr)
-    noexcept;
+public:
+    using const_iterator = rle_vector::const_iterator;
+
+    ATTR_ROW(const UINT cchRowWidth, const TextAttribute attr);
 
     ~ATTR_ROW() = default;
 
@@ -40,13 +41,6 @@ public:
     ATTR_ROW& operator=(ATTR_ROW&&) noexcept = default;
 
     TextAttribute GetAttrByColumn(const size_t column) const;
-    TextAttribute GetAttrByColumn(const size_t column,
-                                  size_t* const pApplies) const;
-
-    size_t GetNumberOfRuns() const noexcept;
-
-    size_t FindAttrIndex(const size_t index,
-                         size_t* const pApplies) const;
 
     std::vector<uint16_t> GetHyperlinks();
 
@@ -55,12 +49,7 @@ public:
 
     void Resize(const size_t newWidth);
 
-    [[nodiscard]] HRESULT InsertAttrRuns(const gsl::span<const TextAttributeRun> newAttrs,
-                                         const size_t iStart,
-                                         const size_t iEnd,
-                                         const size_t cBufferWidth);
-
-    static std::vector<TextAttributeRun> PackAttrs(const std::vector<TextAttribute>& attrs);
+    void Replace(const size_t beginIndex, const size_t endIndex, const TextAttribute& newAttr);
 
     const_iterator begin() const noexcept;
     const_iterator end() const noexcept;
@@ -69,17 +58,14 @@ public:
     const_iterator cend() const noexcept;
 
     friend bool operator==(const ATTR_ROW& a, const ATTR_ROW& b) noexcept;
-    friend class AttrRowIterator;
     friend class ROW;
 
 private:
     void Reset(const TextAttribute attr);
 
-    boost::container::small_vector<TextAttributeRun, 1> _list;
-    size_t _cchRowWidth;
+    rle_vector _data;
 
 #ifdef UNIT_TESTING
-    friend class AttrRowTests;
     friend class CommonState;
 #endif
 };
