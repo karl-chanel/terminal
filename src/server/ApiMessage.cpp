@@ -22,6 +22,54 @@ _CONSOLE_API_MSG::_CONSOLE_API_MSG() :
 {
 }
 
+_CONSOLE_API_MSG::_CONSOLE_API_MSG(const _CONSOLE_API_MSG& other) :
+    _CONSOLE_API_MSG()
+{
+    *this = other;
+}
+
+_CONSOLE_API_MSG& _CONSOLE_API_MSG::operator=(const _CONSOLE_API_MSG& other)
+{
+    if (this == &other)
+    {
+        return *this;
+    }
+
+    Complete = other.Complete;
+    State = other.State;
+    _pDeviceComm = other._pDeviceComm;
+    _pApiRoutines = other._pApiRoutines;
+    _inputBuffer = other._inputBuffer;
+    _outputBuffer = other._outputBuffer;
+
+    constexpr size_t size = offsetof(_CONSOLE_API_MSG, _marker) - offsetof(_CONSOLE_API_MSG, Descriptor);
+    memcpy(&Descriptor, &other.Descriptor, size);
+
+    if (_inputBuffer.empty())
+    {
+        State.InputBuffer = nullptr;
+        State.InputBufferSize = 0;
+    }
+    else
+    {
+        State.InputBuffer = _inputBuffer.data();
+        State.InputBufferSize = static_cast<ULONG>(_inputBuffer.size());
+    }
+
+    if (_outputBuffer.empty())
+    {
+        State.OutputBuffer = nullptr;
+        State.OutputBufferSize = 0;
+    }
+    else
+    {
+        State.OutputBuffer = _outputBuffer.data();
+        State.OutputBufferSize = static_cast<ULONG>(_outputBuffer.size());
+    }
+
+    return *this;
+}
+
 ConsoleProcessHandle* _CONSOLE_API_MSG::GetProcessHandle() const
 {
     return reinterpret_cast<ConsoleProcessHandle*>(_pDeviceComm->GetHandle(Descriptor.Process));

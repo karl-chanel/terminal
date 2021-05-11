@@ -29,17 +29,21 @@ typedef struct _CONSOLE_API_MSG
 {
     _CONSOLE_API_MSG();
 
+    _CONSOLE_API_MSG(_CONSOLE_API_MSG&&) = delete;
+    _CONSOLE_API_MSG& operator=(_CONSOLE_API_MSG&&) = delete;
+
+    _CONSOLE_API_MSG(const _CONSOLE_API_MSG& other);
+    _CONSOLE_API_MSG& operator=(const _CONSOLE_API_MSG& other);
+
     CD_IO_COMPLETE Complete;
     CONSOLE_API_STATE State;
 
     IDeviceComm* _pDeviceComm;
     IApiRoutines* _pApiRoutines;
 
-private:
     boost::container::small_vector<BYTE, 128> _inputBuffer;
     boost::container::small_vector<BYTE, 128> _outputBuffer;
 
-public:
     // From here down is the actual packet data sent/received.
     CD_IO_DESCRIPTOR Descriptor;
     union
@@ -60,9 +64,9 @@ public:
             } u;
         };
     };
+    BYTE _marker[1];
     // End packet data
 
-public:
     // DO NOT PUT MORE FIELDS DOWN HERE.
     // The tail end of this structure will have a console driver packet
     // copied over it and it will overwrite any fields declared here.
