@@ -36,6 +36,7 @@ HIGHCONTRASTON
 HIGHCONTRASTW
 hotkeys
 href
+hrgn
 IActivation
 IApp
 IAppearance
